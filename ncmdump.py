@@ -61,7 +61,7 @@ def dump(file_path):
     image_size = f.read(4)
     image_size = struct.unpack('<I', bytes(image_size))[0]
     image_data = f.read(image_size)
-    file_name = meta_data['musicName'] + '.' + meta_data['format']
+    file_name = f.name.split("/")[-1].split(".ncm")[0] + '.' + meta_data['format']
     m = open(os.path.join(os.path.split(file_path)[0], file_name), 'wb')
     chunk = bytearray()
     while True:
@@ -75,6 +75,7 @@ def dump(file_path):
         m.write(chunk)
     m.close()
     f.close()
+    return file_name
 
 
 if __name__ == '__main__':
